@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人博客</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/about.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <a href="/" class="title">我的个人博客 | 技术博客</a>
+        <ul class="menu">
+            <li><a href="/">首页</a></li>
+            <li><a href="/sitemap.html">地图</a></li>
+            <li><a href="/about.html">关于</a></li>
+            <li><a href="/guestbook.html">留言</a></li>
+        </ul>
+        <div class="search_bar">
+            <input type="text" placeholder="输入关键词查找">
+            <button>搜索</button>
+        </div>
+    </div>
+</header>
+<div class="content">
+    <div class="content_left">
+        <div class="description">
+            <div class="about_title">关于我</div>
+            <p>一个热爱生活</p>
+            <p>喜欢电脑，代码</p>
+            <p>还喜欢吃蜂蜜</p>
+            <p>的一个超级超级帅的</p>
+            <p style="color: #f40;font-size: 38px;font-weight: bolder;">程序员</p>
+
+            <div class="about_title">关于博客</div>
+            <p style="font-weight: bolder;">express + nodejs + vue + javscript + css + html + bootstrap + vue-router + axios + mysql + vscode+</p>
+            <p>=======================================================</p>
+            <p>学习前端的道路上</p>
+            <p>必不可少的就是锻炼自己的代码能力</p>
+            <p>踏上前端的旅程</p>
+            <p>慢慢体会</p>
+
+
+        </div>
+        
+        <div class="blog_comments" id="blog_comments">
+            <span class="blog_comments_msg">当前文章：{{total}} 条留言</span>
+            <div 
+                class="blog_comment" 
+                v-for="(item,i) in cs"
+            
+            >
+                <span><b>{{item.user_name}}</b>：{{item.options}} 发表于 {{item.ctime}} <a style="cursor: pointer" v-on:click="reply(item.id, item.user_name)">[回复]</a></span>
+                <div>{{item.comments}}</div>
+            </div>
+        </div>
+
+        <div class="send_comment" id="send_comment">
+            <span>发表评论</span>
+            <div>
+                <input type="hidden" id="about_parent" value="1">
+                <input type="hidden" id="comment_reply" value="-1">
+                <input type="hidden" id="comment_reply_name" value="0">
+                <input type="text" placeholder="昵称" id="comment_name">
+                <input type="text" placeholder="邮箱（评论被回复时你能收到通知）" id="comment_email">
+            </div>
+            <div>
+                <textarea placeholder="无意义的内容我可能不会回复你" id="comment_content"></textarea>
+            </div>
+            <div>
+                <input type="text" placeholder="验证码" id="comment_code">
+                <span v-html="vcode" v-on:click="changeCode()" style="cursor: pointer;"></span>
+
+            </div>
+            <button v-on:click="sendComment1()">提交评论</button>
+
+        </div>
+    </div>
+    <div class="content_right">
+
+        <!-- 随机标签云 -->
+        <div class="right_moodule" id="random_tags">
+            <div>随机标签云</div>
+            <a v-for = "(item,index) in tags" v-bind:style="{color: randomColor(),fontSize: randomSize(10,25)}" v-bind:href="item.link">{{item.text}}</a>
+        </div>
+        <!-- 最近热门 -->
+        <div class="right_moodule" id="new_hot">
+            <div>最近热门</div>
+            <ul>
+                <li v-for="(item,index) in titleList" >
+                    <a :href="item.link">{{item.title}}</a>
+                </li>
+            </ul>
+        </div>
+        <!-- 最新评论 -->
+        <div class="right_moodule" id="new_comments">
+            <div>最新评论</div>
+            <ul>
+                <li v-for="(item,index) in commentList">
+                    <div>
+                    <span><a v-bind:href="item.link" style="cursor: pointer;">{{item.name}}</a></span>
+                        <span class="pull_right">{{item.date}}</span>
+                    </div>
+                    <p>{{item.comment}}</p>
+                </li>
+            </ul>
+        </div>
+        <!-- 友情链接 -->
+        <!-- <div class="right_moodule">
+            <div>友情链接</div>
+            <span><a href="/">挨踢茶馆</a></span><span><a href="/">挨踢茶馆</a></span>
+            <span><a href="/">挨踢茶馆</a></span><span><a href="/">挨踢茶馆</a></span>
+            <span><a href="/">挨踢茶馆</a></span><span><a href="/">挨踢茶馆</a></span>
+            <span><a href="/">挨踢茶馆</a></span><span><a href="/">挨踢茶馆</a></span>
+            <span><a href="/">挨踢茶馆</a></span><span><a href="/">挨踢茶馆</a></span>
+        </div> -->
+    </div>
+</div>
+<footer class="footer">
+    
+    <p>Copyright © 2019-2020 嘻嘻嘻</p>
+</footer>
+<script src="./js/axios.js"></script>
+<script src="./js/about.js"></script>
+<script src="./js/base.js"></script>
+
+</body>
+</html>
